@@ -1,6 +1,6 @@
 ---
 name: remotion-music-video-director
-description: Create cinematic, dramatic, beat-synced music video concepts and Remotion implementation plans. Use when the user wants a lyrics-first music video workflow that recognizes lyrics from audio/video, fixes lyric sync or line breaks, sources unique frontend animation assets, confirms lyrics with the user, derives meaning and plot from approved lyrics, confirms the plot, then creates a treatment, scene plan, storyboard, prompt pack, word-synced lyric overlay, animation direction, transitions, color style, or Remotion-ready guidance. For Remotion code or build requests, coordinate with $remotion-best-practices.
+description: Create cinematic, animated, beat-synced lyric video concepts and preview-first Remotion implementation plans. Use when the user wants a lyrics-first music video workflow that recognizes lyrics from audio/video, fixes lyric sync or line breaks, sources unique frontend animation assets, confirms lyrics with the user, derives meaning and plot from approved lyrics, confirms the plot, then creates a cohesive visual world, metaphorical story, integrated kinetic typography, treatment, scene plan, storyboard, prompt pack, word-synced lyric overlay, animation direction, transitions, color style, live browser preview workflow, or Remotion-ready guidance. For Remotion code or build requests, coordinate with $remotion-best-practices.
 ---
 
 # Remotion Music Video Director
@@ -20,14 +20,66 @@ Use `$ARGUMENTS` as the song brief when provided, plus any song title, lyrics, g
 Every output must strengthen:
 
 - Storytelling with a clear emotional arc
+- Thematic and tonal cohesion with the song's mood, genre, and message
+- A distinctive visual world with consistent palette, typography, character/object style, and animation technique
+- Integrated kinetic typography that behaves like part of the scene, not a pasted overlay
+- Readable lyrics with strong contrast, appropriate scale, clean line breaks, and vocal-synced timing
+- Metaphorical visual storytelling that reveals subtext instead of illustrating every line literally
 - Dynamic camera movement and scene blocking
 - Dramatic shot design, lighting, and performance
 - Beat-synced editing, cuts, transitions, and pacing
 - Intentional color palette and visual style
 - Motifs that evolve through the song
+- Live browser preview before slow final rendering
 - Remotion-ready timeline, layers, animation cues, and reusable components
 
 The result should feel like a directed music video, not a slideshow.
+
+---
+
+## Animated Lyric Video Direction
+
+When the deliverable is an animated lyric video, treat the lyric text as a main visual actor. The animation should make the audience understand the lyrics while also giving them a memorable visual experience that reflects the song's mood and meaning.
+
+### Style to Song Fit
+
+Choose the animation language from the track's emotional temperature:
+
+- Emotional or acoustic tracks: softer palettes, fluid movement, hand-drawn or tactile textures, intimate framing.
+- Upbeat, pop, dance, or playful tracks: vibrant colors, energetic cuts, lively character or object motion, bold type motion.
+- Dark, dramatic, rap, rock, or cinematic tracks: moody contrast, edgy shapes, harsher lighting, stylized glitches, shadows, or tension-driven motion.
+
+Do not mix unrelated styles. Pick one primary world and a controlled contrast mode for bridge, breakdown, or final payoff.
+
+### Kinetic Typography
+
+Lyrics should remain easy to read at all times, but they should also belong to the world:
+
+- Let words scale, slide, snap, stretch, dissolve, morph, rotate, or pulse in response to vocal delivery, drums, pitch shifts, and emotional emphasis.
+- Make words interact with the environment when useful: projected on walls, reflected in glass, carved into objects, floating as holograms, pulled by wind, threaded through props, or used as physical architecture.
+- Keep timing simple enough for comprehension. Avoid decorative motion that makes the line unreadable during the vocal.
+- Make choruses feel stronger with larger text, brighter contrast, wider layouts, scene changes, or more dynamic typography.
+
+### Metaphor Over Literalism
+
+Do not translate each lyric word-for-word into obvious imagery. Build symbolic vignettes that express the song's underlying conflict, mood, or transformation. Use repeated objects, character gestures, color changes, and spatial changes as metaphors that evolve across verses, hooks, bridge, and final chorus.
+
+### World-Building
+
+Give the video a specific animated universe, such as a sketched memory room, neon comic city, paper-cut dreamscape, arcade-like 3D tunnel, vintage cartoon stage, or minimalist emotional void. Keep the visual rules consistent:
+
+- Palette, lighting, texture, and typography
+- Character design, facial expressions, gestures, and object shapes
+- Camera behavior, transition language, and motion physics
+- Background details that reward rewatching without competing with the lyric read
+
+### Pacing by Energy
+
+Visual momentum must rise and fall with the song:
+
+- High energy sections: fast cuts, sudden color shifts, impact frames, snap zooms, beat flashes, dynamic type entrances, and active camera movement.
+- Low energy sections: smoother transitions, slower pans, longer holds, softer colors, floating type, and fluid character/object motion.
+- Important sections, especially hooks and final choruses, need a clear visual lift over the verse.
 
 ---
 
@@ -64,6 +116,7 @@ After lyrics are confirmed, infer or identify:
 6. Song structure: intro, verse, pre-chorus, chorus, bridge, drop, outro
 7. Beat moments: first vocal, hook, snare hits, beat drops, instrumental breaks
 8. Emotional progression from start to finish
+9. Animated lyric video style: primary world, typography behavior, metaphor system, readability constraints
 
 If BPM or duration are unknown, estimate from the brief and label the estimate. Do not treat unconfirmed lyrics as final.
 
@@ -107,6 +160,7 @@ For every scene, include:
 - Location
 - Emotional purpose
 - Artist or character action
+- Lyric or typography behavior
 - Camera movement
 - Lighting and color palette
 - Editing rhythm
@@ -195,6 +249,20 @@ Example:
 
 ---
 
+## Typography and Readability
+
+Lyric text must be designed, not merely displayed.
+
+- Use strong contrast against the active background; add shadow, stroke, backing shape, blur plate, or lighting separation when needed.
+- Keep line length short enough for quick reading. Preserve phrase meaning and avoid awkward breaks.
+- Match text scale to the shot: hero text for hooks, tighter type for intimate verse details, smaller embedded words for background motifs.
+- Keep important words on screen long enough to read after the vocal hit.
+- Use one primary lyric typeface and one contrast typeface only when the story demands it.
+- Use text motion to express delivery: whispered lines can drift or fade; shouted lines can slam, shake, split, or burst; sustained notes can stretch, smear, or glow.
+- If text is embedded in the environment, verify it still reads clearly over motion, lighting, particles, and scene detail.
+
+---
+
 ## Color and Style Direction
 
 Choose one primary world and one contrast world.
@@ -273,6 +341,16 @@ If `$remotion-best-practices` is unavailable, still follow these minimum Remotio
 - Use `<Sequence>` with `from` and `durationInFrames` for scene timing
 - Use `<Img>`, `<Audio>`, and `<Video>` components for media
 - Define fps, width, height, and duration in `src/Root.tsx` or `calculateMetadata`
+
+### Preview Before Render
+
+For implementation work, prefer the live Remotion/browser preview for iteration. Rendering can take too long, so do not start a final `remotion render` unless the user explicitly asks for it or has approved the preview.
+
+- Start the local preview server after the composition builds: use the project's existing dev script first, then `npx remotion preview` if no script is available.
+- If the default port is busy, choose another available port and state the URL.
+- Give the user the localhost preview URL so they can review the lyric video in the browser before rendering.
+- When browser tools are available, open the preview URL and verify the composition loads, text is readable, timing begins correctly, and no obvious blank screen or asset failure appears.
+- Use still renders, screenshots, or short low-resolution test renders only for focused checks. Keep the full final render as the last step after preview approval.
 
 For each scene, include practical Remotion notes:
 
@@ -436,21 +514,32 @@ When generating a full treatment, use this structure:
 ## Remotion Build Plan
 - FPS:
 - Composition duration:
+- Live preview command:
+- Preview URL:
+- Preview approval needed before final render:
 - Main components:
 - Effects layers:
 - Beat-sync strategy:
 - Typography strategy:
+- Readability and contrast strategy:
+- Animated world rules:
+- Metaphor and motif payoff:
 - Transition components:
 - `$remotion-best-practices` rules to load:
 - Remotion guardrails:
 - Color grading layer:
-- Export notes:
+- Render/export notes after preview approval:
 
 ## Prompt Pack for AI Video or Image Generation
 Create 8-15 shot prompts. Each prompt should include subject, setting, action, camera movement, lighting, color, lens feel, mood, and negative constraints if useful.
 
 ## Quality Check
 - The video has a clear story, not random visuals.
+- The visual style matches the song's mood, genre, and message.
+- The animated world is cohesive and specific.
+- Lyric typography is integrated into the visual art, not just overlaid.
+- Lyrics stay readable through motion, contrast, line length, and timing.
+- The imagery uses metaphor and symbolic vignettes instead of literal one-to-one lyric translation.
 - The chorus is visually bigger than the verse.
 - The bridge creates contrast.
 - Camera movement matches emotion.
@@ -460,6 +549,7 @@ Create 8-15 shot prompts. Each prompt should include subject, setting, action, c
 - Color and lighting are intentional.
 - Remotion implementation is specific enough to build.
 - Remotion code guidance explicitly uses `$remotion-best-practices` when implementation is requested.
+- Implementation work serves a live browser preview before attempting a slow final render.
 ```
 
 ---
@@ -486,15 +576,21 @@ Before finalizing, verify:
 
 1. Opening image is memorable.
 2. Lyrics were collected or extracted and confirmed before final scene planning.
-3. Every scene includes movement.
-4. Transitions are motivated.
-5. Chorus is visually larger than verse.
-6. Bridge changes the visual language.
-7. Final chorus is the strongest section.
-8. Final image is memorable.
-9. Story has emotional progression based on the approved lyric meaning.
-10. Color palette is intentional.
-11. Remotion plan is buildable.
-12. If implementation is requested, `$remotion-best-practices` has been used for code, timing, media, and render guidance.
+3. Visual style matches the track's mood, genre, and message.
+4. The video has one cohesive animated world.
+5. Lyric text is readable and integrated into the scene design.
+6. Typography motion follows vocal delivery and musical rhythm.
+7. Imagery expresses theme through metaphor rather than literal line-by-line depiction.
+8. Every scene includes movement.
+9. Transitions are motivated.
+10. Chorus is visually larger than verse.
+11. Bridge changes the visual language.
+12. Final chorus is the strongest section.
+13. Final image is memorable.
+14. Story has emotional progression based on the approved lyric meaning.
+15. Color palette is intentional.
+16. Remotion plan is buildable.
+17. If implementation is requested, a live preview URL is served and checked before final rendering.
+18. If implementation is requested, `$remotion-best-practices` has been used for code, timing, media, preview, and render guidance.
 
 If the plan feels generic, revise with more specific imagery, stronger motifs, sharper camera moves, and clearer emotional stakes.

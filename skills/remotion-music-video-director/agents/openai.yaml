@@ -1,4 +1,4 @@
 interface:
   display_name: "Remotion Music Video Director"
-  short_description: "Music video direction for Remotion"
-  default_prompt: "Use $remotion-music-video-director to extract or confirm lyrics first, derive the song meaning and plot, then create a cinematic Remotion-ready music video plan."
+  short_description: "Animated lyric video direction for Remotion"
+  default_prompt: "Use $remotion-music-video-director to extract or confirm lyrics first, derive the song meaning and plot, then create a cohesive animated lyric video world with integrated kinetic typography, live browser preview, and a Remotion-ready plan."

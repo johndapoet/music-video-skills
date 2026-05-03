@@ -15,7 +15,8 @@ Use this process:
 3. Prefer creator portfolios, curated collections, recent uploads, and assets with editable source or clean export formats.
 4. Avoid overused first-page assets unless they can be recolored, re-timed, cropped, or combined into a unique motif.
 5. Verify license before download and record attribution requirements in project notes.
-6. Test the downloaded asset in the target stack before building scenes around it.
+6. Check that the asset supports the approved animated world, metaphor system, and lyric readability.
+7. Test the downloaded asset in the target stack before building scenes around it.
 
 ## Source Map
 
@@ -58,6 +59,7 @@ For unique finds:
 
 - Search synonyms and metaphors from the confirmed lyrics.
 - Search for scene objects, not only emotions: "cracked photo", "empty hallway", "red cloth", "burning letter", "chrome mask".
+- Search for typography environments when lyrics need to be integrated: "neon sign letters", "hologram text panel", "paper cutout alphabet", "graffiti wall texture", "glass reflection type".
 - Open creator profiles and browse related packs.
 - Compare at least 5 candidates for hero assets and 2 candidates for small supporting assets.
 - Prefer assets that can be transformed into a motif across verse, chorus, bridge, and final chorus.
@@ -70,7 +72,10 @@ Before choosing an asset, verify:
 - **Format**: Prefer `.json` or `.lottie` for Lottie, SVG for vector, and `.glb` or `.gltf` for 3D.
 - **Performance**: Check file size, polygon count, texture size, and animation duration.
 - **Editability**: Prefer assets with separate layers, color controls, transparent backgrounds, or clean material slots.
-- **Visual fit**: Match the approved lyric meaning, motifs, palette, and camera language.
+- **Visual fit**: Match the approved lyric meaning, motifs, palette, camera language, and song tone.
+- **World fit**: The asset should belong to the same animated universe as the typography, characters, objects, and backgrounds.
+- **Lyric readability**: Avoid assets that fight lyric contrast, create busy text backgrounds, or obscure vocal-synced words.
+- **Metaphor value**: Prefer assets that can express the underlying theme symbolically instead of illustrating a lyric literally once.
 - **Uniqueness**: Avoid generic top-result assets unless heavily customized.
 - **Attribution**: Save author name, URL, license, and required credit text.
 
@@ -86,6 +91,7 @@ When implementing assets:
 - Place downloaded assets in `public/` unless the existing project uses a different asset convention.
 - Reference local assets with `staticFile()`.
 - Animate with Remotion frame logic such as `useCurrentFrame()`, `interpolate()`, `spring()`, and `Easing`; do not depend on CSS transitions or CSS animations for rendered timing.
+- Verify hero assets in the live preview server before any full render. Check load failures, scale, transparency, contrast behind lyrics, and playback performance in the browser first.
 
 ## Attribution Log Template
 

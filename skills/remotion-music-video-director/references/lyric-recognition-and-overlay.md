@@ -470,6 +470,17 @@ LYRIC_HARD_GAP_MS=620 \
 node scripts/transcribe-lyrics.mjs public/song.mp3
 ```
 
+## Lyric Typography Design
+
+Use lyric overlays as part of the animated world, not as captions pasted over finished footage.
+
+- Preserve readability first: high contrast, stable phrase grouping, enough dwell time, and no motion that obscures the lyric during the vocal.
+- Match typography to tone: soft drifting type for vulnerable lines, bold snap or scale hits for energetic hooks, distorted or fractured type for darker dramatic moments.
+- Let important words react to delivery with frame-driven scale, opacity, blur, glow, rotation, or position changes.
+- Embed text into the scene when it helps the concept: projected on walls, reflected in glass, attached to objects, floating as holograms, or moving through foreground and background layers.
+- Keep choruses visually stronger than verses through larger type, brighter contrast, wider layouts, faster entrances, or stronger environmental interaction.
+- Use one primary lyric type system across the video. Add contrast only for a purposeful bridge, breakdown, or narrative shift.
+
 ## Remotion Overlay Pattern
 
 Do not rely on line-level captions for timing. Render each line as a page, then highlight each word from its own `startMs` and `endMs`.
@@ -581,6 +592,8 @@ export const LyricOverlay = () => {
 ```
 
 Use frame-driven `interpolate()` calculations only. Do not use CSS transitions or CSS animations for lyric motion because they will not render correctly in Remotion.
+
+Before a full render, serve the composition in the live Remotion/browser preview and check at least one verse and one chorus for lyric readability, word timing, line breaks, contrast, and asset loading. Use the preview URL for user review before starting the slow final render.
 
 ## Sync Calibration
 
