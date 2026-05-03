@@ -1,6 +1,6 @@
 ---
 name: remotion-music-video-director
-description: Create cinematic, dramatic, beat-synced music video concepts and Remotion implementation plans. Use when the user wants a lyrics-first music video workflow that recognizes lyrics from audio/video, confirms them with the user, derives meaning and plot from approved lyrics, confirms the plot, then creates a treatment, scene plan, storyboard, prompt pack, lyric overlay, animation direction, transitions, color style, or Remotion-ready guidance. For Remotion code or build requests, coordinate with $remotion-best-practices.
+description: Create cinematic, dramatic, beat-synced music video concepts and Remotion implementation plans. Use when the user wants a lyrics-first music video workflow that recognizes lyrics from audio/video, fixes lyric sync or line breaks, confirms lyrics with the user, derives meaning and plot from approved lyrics, confirms the plot, then creates a treatment, scene plan, storyboard, prompt pack, word-synced lyric overlay, animation direction, transitions, color style, or Remotion-ready guidance. For Remotion code or build requests, coordinate with $remotion-best-practices.
 ---
 
 # Remotion Music Video Director
@@ -38,7 +38,7 @@ Do not start with random visuals. Start with the lyrics.
 1. **Collect or extract lyrics first**
    - If the user provides lyrics, use them as the draft.
    - If the user provides a video or audio file but no lyrics, transcribe or extract the lyrics when tools are available. If extraction is not possible, ask the user to paste or upload the lyrics before building the treatment.
-   - For voice/lyrics recognition, timed captions, or lyric embedding, read `references/lyric-recognition-and-overlay.md`.
+   - For voice/lyrics recognition, word-level sync, line breaking, timed captions, or lyric embedding, read `references/lyric-recognition-and-overlay.md`.
    - Mark uncertain words as `[unclear]` and never invent missing lines.
    - If lyrics are from a third-party copyrighted source rather than user-provided media, avoid reproducing full lyrics; ask the user to provide them or work from brief excerpts and summaries.
 2. **Confirm the lyrics with the user**
