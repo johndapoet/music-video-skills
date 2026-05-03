@@ -7,7 +7,9 @@ Use this reference when the user asks to recognize lyrics from audio/video, crea
 - Workflow
 - Word-level transcription script
 - Output files
+- Shared Whisper cache
 - Line-breaking rules
+- Lyric typography design
 - Remotion overlay pattern
 - Sync calibration
 
@@ -30,16 +32,18 @@ npm install @remotion/install-whisper-cpp @remotion/captions
 
 3. Use one shared Whisper.cpp/model cache for all projects. The script defaults to `~/.cache/remotion-music-video-director/whisper.cpp`, so each project does not download another large Whisper.cpp checkout.
 4. Add the script below to the target Remotion project as `scripts/transcribe-lyrics.mjs`.
-5. Put the song in `public/`, then run the script with the audio path:
+5. Put the song wherever the project keeps its other media assets (typically `public/` or a subfolder like `public/songs/`), then run the script with the audio path:
 
 ```bash
 node scripts/transcribe-lyrics.mjs public/song.mp3
 ```
 
-6. Review `public/lyrics-transcript.txt` with the user before treating lyrics as confirmed.
-7. Use `public/lyrics-lines.json` for readable lyric lines.
-8. Use `public/lyrics-words.json` for word-level highlighting and exact sync.
-9. Keep `public/lyrics-captions.json` only as compatibility data for `@remotion/captions`.
+The script writes every lyrics output **into the same folder as the audio file**, using the audio basename as the prefix so multiple songs in one folder do not collide. For `public/song.mp3` you get `public/song-words.json`, `public/song-lines.json`, etc. For `public/songs/track-1.mp3` you get `public/songs/track-1-words.json`, and so on. Override with `LYRICS_OUTPUT_DIR` or `LYRICS_OUTPUT_PREFIX` if a project needs a different convention.
+
+6. Review the `*-transcript.txt` file next to the audio with the user before treating lyrics as confirmed.
+7. Use `*-lines.json` for readable lyric lines.
+8. Use `*-words.json` for word-level highlighting and exact sync.
+9. Keep `*-captions.json` only as compatibility data for `@remotion/captions`.
 
 If network access fails while installing packages, cloning Whisper.cpp, or downloading a model, rerun the command with user approval for network access. If the first Whisper.cpp checkout is incomplete, remove the incomplete checkout before retrying.
 
@@ -62,9 +66,13 @@ import {
 const root = process.cwd();
 const inputArg = process.argv[2] ?? process.env.LYRICS_AUDIO ?? "public/song.mp3";
 const audioPath = path.isAbsolute(inputArg) ? inputArg : path.join(root, inputArg);
-const publicDir = path.join(root, "public");
-const outputPrefix = process.env.LYRICS_OUTPUT_PREFIX ?? "lyrics";
-const wavPath = path.join(publicDir, `${outputPrefix}-recognition.wav`);
+const audioDir = path.dirname(audioPath);
+const audioBaseName = path.basename(audioPath, path.extname(audioPath));
+const outputDir = process.env.LYRICS_OUTPUT_DIR
+  ? path.resolve(process.env.LYRICS_OUTPUT_DIR)
+  : audioDir;
+const outputPrefix = process.env.LYRICS_OUTPUT_PREFIX ?? audioBaseName;
+const wavPath = path.join(outputDir, `${outputPrefix}-recognition.wav`);
 
 const sharedWhisperCache = process.env.WHISPER_CACHE_DIR
   ? path.resolve(process.env.WHISPER_CACHE_DIR)
@@ -73,11 +81,11 @@ const whisperPath = process.env.WHISPER_CPP_DIR
   ? path.resolve(process.env.WHISPER_CPP_DIR)
   : path.join(sharedWhisperCache, "whisper.cpp");
 
-const wordsOutputPath = path.join(publicDir, `${outputPrefix}-words.json`);
-const linesOutputPath = path.join(publicDir, `${outputPrefix}-lines.json`);
-const captionsOutputPath = path.join(publicDir, `${outputPrefix}-captions.json`);
-const rawOutputPath = path.join(publicDir, `${outputPrefix}-whisper-raw.json`);
-const textOutputPath = path.join(publicDir, `${outputPrefix}-transcript.txt`);
+const wordsOutputPath = path.join(outputDir, `${outputPrefix}-words.json`);
+const linesOutputPath = path.join(outputDir, `${outputPrefix}-lines.json`);
+const captionsOutputPath = path.join(outputDir, `${outputPrefix}-captions.json`);
+const rawOutputPath = path.join(outputDir, `${outputPrefix}-whisper-raw.json`);
+const textOutputPath = path.join(outputDir, `${outputPrefix}-transcript.txt`);
 
 const whisperCppVersion = process.env.WHISPER_CPP_VERSION ?? "1.5.5";
 const model = process.env.WHISPER_MODEL ?? "small.en";
@@ -341,7 +349,7 @@ if (!fs.existsSync(audioPath)) {
   throw new Error(`Missing audio file: ${audioPath}`);
 }
 
-fs.mkdirSync(publicDir, { recursive: true });
+fs.mkdirSync(outputDir, { recursive: true });
 fs.mkdirSync(path.dirname(whisperPath), { recursive: true });
 
 console.log("Preparing 16 kHz mono WAV for word-level lyric recognition...");
@@ -420,11 +428,16 @@ console.log(`Wrote plain transcript to ${textOutputPath}`);
 
 ## Output Files
 
-- `public/lyrics-words.json`: word-level tokens with `text`, `startMs`, and `endMs`. Use this for precise highlighting.
-- `public/lyrics-lines.json`: readable lyric lines with nested word tokens. Use this for the primary lyric overlay.
-- `public/lyrics-captions.json`: word-level `Caption[]` data for `@remotion/captions` compatibility.
-- `public/lyrics-transcript.txt`: plain draft transcript to confirm with the user.
-- `public/lyrics-whisper-raw.json`: raw recognizer output for debugging.
+All outputs are written next to the source audio file and share the audio's basename as their prefix, so lyrics, music, and other assets stay co-located. For `public/song.mp3`:
+
+- `public/song-words.json`: word-level tokens with `text`, `startMs`, and `endMs`. Use this for precise highlighting.
+- `public/song-lines.json`: readable lyric lines with nested word tokens. Use this for the primary lyric overlay.
+- `public/song-captions.json`: word-level `Caption[]` data for `@remotion/captions` compatibility.
+- `public/song-transcript.txt`: plain draft transcript to confirm with the user.
+- `public/song-whisper-raw.json`: raw recognizer output for debugging.
+- `public/song-recognition.wav`: 16 kHz mono WAV used during recognition; safe to delete after sync is verified.
+
+Use `LYRICS_OUTPUT_PREFIX` to change the basename (for example, when you want `lyrics-` instead of the song name) and `LYRICS_OUTPUT_DIR` to write outputs to a different folder.
 
 ## Shared Whisper Cache
 
@@ -450,7 +463,7 @@ Use `WHISPER_CACHE_DIR` to change the parent cache folder. Use `WHISPER_CPP_DIR`
 
 ## Line-Breaking Rules
 
-Prefer generated `lyrics-lines.json` over automatic TikTok-style grouping when the lyric phrasing matters.
+Prefer the generated `*-lines.json` file (next to the song) over automatic TikTok-style grouping when the lyric phrasing matters.
 
 Good lyric lines:
 
@@ -485,6 +498,8 @@ Use lyric overlays as part of the animated world, not as captions pasted over fi
 
 Do not rely on line-level captions for timing. Render each line as a page, then highlight each word from its own `startMs` and `endMs`.
 
+Because lyrics files live next to the audio (for example `public/song.mp3` → `public/song-lines.json`), pass the lines path to the component as a prop so the same component works for any song. The path is relative to `public/`, exactly like the matching `staticFile()` lookup.
+
 ```tsx
 import { useEffect, useState } from "react";
 import {
@@ -510,17 +525,22 @@ type LyricLine = {
   words: LyricWord[];
 };
 
-export const LyricOverlay = () => {
+type LyricOverlayProps = {
+  // Path to the lines JSON inside `public/`, e.g. "song-lines.json" or "songs/track-1-lines.json".
+  linesFile: string;
+};
+
+export const LyricOverlay = ({ linesFile }: LyricOverlayProps) => {
   const [lines, setLines] = useState<LyricLine[]>([]);
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const timeMs = (frame / fps) * 1000;
 
   useEffect(() => {
-    fetch(staticFile("lyrics-lines.json"))
+    fetch(staticFile(linesFile))
       .then((response) => response.json())
       .then(setLines);
-  }, []);
+  }, [linesFile]);
 
   const activeLine = lines.find((line) => {
     return timeMs >= line.startMs - 140 && timeMs <= line.endMs + 260;
@@ -593,7 +613,7 @@ export const LyricOverlay = () => {
 
 Use frame-driven `interpolate()` calculations only. Do not use CSS transitions or CSS animations for lyric motion because they will not render correctly in Remotion.
 
-Before a full render, serve the composition in the live Remotion/browser preview and check at least one verse and one chorus for lyric readability, word timing, line breaks, contrast, and asset loading. Use the preview URL for user review before starting the slow final render.
+Final renders are gated on explicit user approval (see SKILL.md "Preview Before Render"). Serve the composition in the live Remotion/browser preview, check at least one verse and one chorus for lyric readability, word timing, line breaks, contrast, and asset loading, hand the user the preview URL, and wait for an explicit "render it" before starting the slow final render.
 
 ## Sync Calibration
 
@@ -608,4 +628,4 @@ LYRIC_OFFSET_MS=180 node scripts/transcribe-lyrics.mjs public/song.mp3
 
 Use a negative value when lyrics appear late and need to start earlier. Use a positive value when lyrics appear too early and need to start later.
 
-If only some sections drift, split the song into sections or manually adjust the affected word ranges in `lyrics-words.json` and regenerate lines from the corrected words.
+If only some sections drift, split the song into sections or manually adjust the affected word ranges in the `*-words.json` file next to the song and regenerate lines from the corrected words.

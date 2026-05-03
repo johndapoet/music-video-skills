@@ -342,15 +342,24 @@ If `$remotion-best-practices` is unavailable, still follow these minimum Remotio
 - Use `<Img>`, `<Audio>`, and `<Video>` components for media
 - Define fps, width, height, and duration in `src/Root.tsx` or `calculateMetadata`
 
-### Preview Before Render
+### Preview Before Render (Render Gate)
 
-For implementation work, prefer the live Remotion/browser preview for iteration. Rendering can take too long, so do not start a final `remotion render` unless the user explicitly asks for it or has approved the preview.
+Final renders are gated on explicit user approval. Never run `remotion render`, a final export script, or any long-running render command until **all** of the following are true:
 
-- Start the local preview server after the composition builds: use the project's existing dev script first, then `npx remotion preview` if no script is available.
-- If the default port is busy, choose another available port and state the URL.
-- Give the user the localhost preview URL so they can review the lyric video in the browser before rendering.
-- When browser tools are available, open the preview URL and verify the composition loads, text is readable, timing begins correctly, and no obvious blank screen or asset failure appears.
-- Use still renders, screenshots, or short low-resolution test renders only for focused checks. Keep the full final render as the last step after preview approval.
+1. The local Remotion preview server is running and reachable at a stated `http://localhost:<port>` URL.
+2. That URL has been presented to the user with a clear request to review it in the browser.
+3. The user has explicitly confirmed the preview is ready to render (for example, "looks good, render it" or "approved, render the final"). Silence, hedged replies ("maybe", "I think so"), or general thumbs-up on the treatment do not count as render approval — ask again.
+
+Until all three conditions are met, only single-frame `remotion still` calls and short low-resolution debug renders are allowed for focused checks.
+
+Workflow:
+
+1. Start the preview server after the composition builds. Prefer the project's existing dev script (for example `npm run dev`); fall back to `npx remotion preview` only if no project script exists.
+2. If the default port is busy, choose another available port and state the URL exactly.
+3. Hand the user the URL with a one-line review prompt that names what to check: lyric readability, word timing, line breaks, contrast, asset load, and overall pacing.
+4. When browser tools are available, open the preview URL yourself and report what you saw (composition loads, text readable, timing starts correctly, no blank screen or asset failure) before asking for approval.
+5. If the user requests changes, iterate in the preview and re-present the URL. Loop until the user gives explicit render approval.
+6. Only after that explicit approval, run the final render command.
 
 For each scene, include practical Remotion notes:
 
@@ -371,202 +380,7 @@ Use 24 fps for filmic pacing, 30 fps for modern digital pacing, and 60 fps only 
 
 ## Output Format
 
-When generating a full treatment, use this structure:
-
-```markdown
-# Music Video Treatment: [Title]
-
-## Assumptions
-- Song/artist:
-- Genre:
-- Mood:
-- Estimated energy or BPM:
-- Video length:
-- Lyrics source:
-- Lyrics confirmation status:
-
-## Confirmed Lyric Meaning
-- Literal story:
-- Emotional subtext:
-- Central conflict:
-- Key symbols or repeated phrases:
-- Section-by-section lyric beats:
-
-## Approved Plot Direction
-- User-approved interpretation:
-- Visual metaphor:
-- Character or artist arc:
-- Meaning-to-scene strategy:
-
-## Director's Concept
-[One strong paragraph describing the emotional story and visual world.]
-
-## Story Arc
-- Opening image:
-- Emotional conflict:
-- Build:
-- Hook/chorus release:
-- Bridge contrast:
-- Final payoff:
-- Final image:
-
-## Visual Style
-- Primary style:
-- Contrast world:
-- Color palette:
-- Lighting language:
-- Texture:
-- Visual references:
-
-## Motifs
-1. [Motif] — how it evolves
-2. [Motif] — how it evolves
-3. [Motif] — how it evolves
-
-## Camera Language
-[Movement vocabulary by song section.]
-
-## Editing and Transition Language
-[Cut speed, beat-sync logic, and repeated transition types.]
-
-## Timeline and Scene Plan
-
-### 00:00-00:10 — Intro / Opening Image
-- Location:
-- Action:
-- Camera:
-- Lighting/color:
-- Edit rhythm:
-- Transition:
-- Story purpose:
-- Remotion notes:
-
-### 00:10-00:35 — Verse 1
-- Location:
-- Action:
-- Camera:
-- Lighting/color:
-- Edit rhythm:
-- Transition:
-- Story purpose:
-- Remotion notes:
-
-### 00:35-00:50 — Pre-Chorus / Build
-- Location:
-- Action:
-- Camera:
-- Lighting/color:
-- Edit rhythm:
-- Transition:
-- Story purpose:
-- Remotion notes:
-
-### 00:50-01:20 — Chorus / Hook
-- Location:
-- Action:
-- Camera:
-- Lighting/color:
-- Edit rhythm:
-- Transition:
-- Story purpose:
-- Remotion notes:
-
-### 01:20-01:50 — Verse 2
-- Location:
-- Action:
-- Camera:
-- Lighting/color:
-- Edit rhythm:
-- Transition:
-- Story purpose:
-- Remotion notes:
-
-### 01:50-02:10 — Bridge / Breakdown
-- Location:
-- Action:
-- Camera:
-- Lighting/color:
-- Edit rhythm:
-- Transition:
-- Story purpose:
-- Remotion notes:
-
-### 02:10-02:50 — Final Chorus / Climax
-- Location:
-- Action:
-- Camera:
-- Lighting/color:
-- Edit rhythm:
-- Transition:
-- Story purpose:
-- Remotion notes:
-
-### 02:50-End — Outro / Final Image
-- Location:
-- Action:
-- Camera:
-- Lighting/color:
-- Edit rhythm:
-- Transition:
-- Story purpose:
-- Remotion notes:
-
-## Remotion Build Plan
-- FPS:
-- Composition duration:
-- Live preview command:
-- Preview URL:
-- Preview approval needed before final render:
-- Main components:
-- Effects layers:
-- Beat-sync strategy:
-- Typography strategy:
-- Readability and contrast strategy:
-- Animated world rules:
-- Metaphor and motif payoff:
-- Transition components:
-- `$remotion-best-practices` rules to load:
-- Remotion guardrails:
-- Color grading layer:
-- Render/export notes after preview approval:
-
-## Prompt Pack for AI Video or Image Generation
-Create 8-15 shot prompts. Each prompt should include subject, setting, action, camera movement, lighting, color, lens feel, mood, and negative constraints if useful.
-
-## Quality Check
-- The video has a clear story, not random visuals.
-- The visual style matches the song's mood, genre, and message.
-- The animated world is cohesive and specific.
-- Lyric typography is integrated into the visual art, not just overlaid.
-- Lyrics stay readable through motion, contrast, line length, and timing.
-- The imagery uses metaphor and symbolic vignettes instead of literal one-to-one lyric translation.
-- The chorus is visually bigger than the verse.
-- The bridge creates contrast.
-- Camera movement matches emotion.
-- Cuts and transitions are motivated by music.
-- Scenes are grounded in confirmed lyrics and approved meaning.
-- Motifs evolve across the video.
-- Color and lighting are intentional.
-- Remotion implementation is specific enough to build.
-- Remotion code guidance explicitly uses `$remotion-best-practices` when implementation is requested.
-- Implementation work serves a live browser preview before attempting a slow final render.
-```
-
----
-
-## Shot Prompt Formula
-
-Use this formula for AI video or image prompts:
-
-```text
-[Subject/artist] in [specific location], [clear action], [emotion], [camera movement], [shot size/lens feel], [lighting], [color palette], [texture/style], [music-video energy], [transition cue if relevant].
-```
-
-Example:
-
-```text
-A lone artist walking through a rain-soaked neon alley at midnight, singing directly into camera with controlled anger, slow handheld tracking shot, 35mm cinematic lens feel, cyan and magenta neon reflections, heavy mist, wet asphalt glow, dramatic high-contrast music video style, ending with a whip pan into darkness.
-```
+When generating a full treatment, follow the structure in `references/treatment-template.md`. It contains the section-by-section template, the Remotion build plan, the per-section quality check, and the shot prompt formula with an example. Use it verbatim for full treatments; trim sections only when the user asks for a partial deliverable.
 
 ---
 
@@ -590,7 +404,7 @@ Before finalizing, verify:
 14. Story has emotional progression based on the approved lyric meaning.
 15. Color palette is intentional.
 16. Remotion plan is buildable.
-17. If implementation is requested, a live preview URL is served and checked before final rendering.
+17. If implementation is requested, the preview server is running, the localhost URL has been shown to the user, and the user has **explicitly approved** that preview before any final render command is issued. No render runs without that explicit approval.
 18. If implementation is requested, `$remotion-best-practices` has been used for code, timing, media, preview, and render guidance.
 
 If the plan feels generic, revise with more specific imagery, stronger motifs, sharper camera moves, and clearer emotional stakes.
