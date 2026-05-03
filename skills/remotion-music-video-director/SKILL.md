@@ -1,6 +1,6 @@
 ---
 name: remotion-music-video-director
-description: Create cinematic, dramatic, beat-synced music video concepts and Remotion implementation plans. Use when the user wants a lyrics-first music video workflow that recognizes lyrics from audio/video, fixes lyric sync or line breaks, confirms lyrics with the user, derives meaning and plot from approved lyrics, confirms the plot, then creates a treatment, scene plan, storyboard, prompt pack, word-synced lyric overlay, animation direction, transitions, color style, or Remotion-ready guidance. For Remotion code or build requests, coordinate with $remotion-best-practices.
+description: Create cinematic, dramatic, beat-synced music video concepts and Remotion implementation plans. Use when the user wants a lyrics-first music video workflow that recognizes lyrics from audio/video, fixes lyric sync or line breaks, sources unique frontend animation assets, confirms lyrics with the user, derives meaning and plot from approved lyrics, confirms the plot, then creates a treatment, scene plan, storyboard, prompt pack, word-synced lyric overlay, animation direction, transitions, color style, or Remotion-ready guidance. For Remotion code or build requests, coordinate with $remotion-best-practices.
 ---
 
 # Remotion Music Video Director
@@ -262,7 +262,7 @@ If `$remotion-best-practices` is available, load its main guidance first, then l
 - `rules/audio-visualization.md` for waveforms, spectrum bars, bass-reactive effects, or beat-reactive visuals
 - `rules/audio.md`, `rules/trimming.md`, or `rules/get-audio-duration.md` for music files, timing, volume, and duration
 - `rules/sequencing.md`, `rules/timing.md`, and `rules/transitions.md` for cuts, scene timing, easing, and transitions
-- `rules/images.md`, `rules/videos.md`, `rules/light-leaks.md`, `rules/lottie.md`, or `rules/3d.md` for visual assets and effects
+- `rules/images.md`, `rules/videos.md`, `rules/light-leaks.md`, `rules/lottie.md`, or `rules/3d.md` for visual assets and effects; read `references/frontend-animation-asset-sourcing.md` when finding unique assets
 - `rules/text-animations.md`, `rules/measuring-text.md`, `rules/google-fonts.md`, or `rules/local-fonts.md` for lyric typography
 - `rules/parameters.md`, `rules/calculate-metadata.md`, and `rules/compositions.md` for reusable, configurable video systems
 
