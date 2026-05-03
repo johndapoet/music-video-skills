@@ -1,6 +1,6 @@
 ---
 name: remotion-music-video-director
-description: Create cinematic, dramatic, beat-synced music video concepts and Remotion implementation plans. Use when the user wants a music video treatment, scene plan, storyboard, prompt pack, animation direction, editing rhythm, camera movement, transitions, lighting, color style, or Remotion-ready generation guidance from a song brief, lyrics, genre, mood, BPM, or style references. For Remotion code or build requests, coordinate with $remotion-best-practices.
+description: Create cinematic, dramatic, beat-synced music video concepts and Remotion implementation plans. Use when the user wants a lyrics-first music video workflow that extracts or collects lyrics from a song/video, confirms them with the user, derives meaning and plot from the approved lyrics, confirms the plot, then creates a treatment, scene plan, storyboard, prompt pack, animation direction, transitions, color style, or Remotion-ready guidance. For Remotion code or build requests, coordinate with $remotion-best-practices.
 ---
 
 # Remotion Music Video Director
@@ -31,20 +31,40 @@ The result should feel like a directed music video, not a slideshow.
 
 ---
 
-## Analyze the Song First
+## Lyrics-First Approval Workflow
 
-Infer or identify:
+Do not start with random visuals. Start with the lyrics.
+
+1. **Collect or extract lyrics first**
+   - If the user provides lyrics, use them as the draft.
+   - If the user provides a video or audio file but no lyrics, transcribe or extract the lyrics when tools are available. If extraction is not possible, ask the user to paste or upload the lyrics before building the treatment.
+   - Mark uncertain words as `[unclear]` and never invent missing lines.
+   - If lyrics are from a third-party copyrighted source rather than user-provided media, avoid reproducing full lyrics; ask the user to provide them or work from brief excerpts and summaries.
+2. **Confirm the lyrics with the user**
+   - Present a concise "Lyrics Draft" or section-by-section lyric outline.
+   - Ask the user to confirm or correct it before creating the story.
+   - Do not create the full treatment until the user confirms the lyrics, unless they explicitly ask to proceed with assumptions.
+3. **Derive meaning from confirmed lyrics**
+   - Identify the literal story, emotional subtext, speaker, conflict, symbols, repeated phrases, and transformation.
+   - Map each song section to a narrative beat so verses, hooks, bridge, and outro all serve the song meaning.
+   - Propose a meaningful plot and visual metaphor system anchored to the confirmed lyrics.
+4. **Confirm the meaning and plot**
+   - Present a short "Meaning and Plot Proposal" before the scene plan.
+   - Ask the user to approve, reject, or adjust the interpretation.
+   - After approval, create the treatment, timeline, prompts, and Remotion plan.
+
+After lyrics are confirmed, infer or identify:
 
 1. Genre and subgenre
 2. Tempo or perceived energy
 3. Mood and emotional temperature
-4. Lyrical theme or central conflict
+4. Confirmed lyrical theme or central conflict
 5. Artist persona
 6. Song structure: intro, verse, pre-chorus, chorus, bridge, drop, outro
 7. Beat moments: first vocal, hook, snare hits, beat drops, instrumental breaks
 8. Emotional progression from start to finish
 
-If BPM, lyrics, or duration are unknown, estimate from the brief and continue.
+If BPM or duration are unknown, estimate from the brief and label the estimate. Do not treat unconfirmed lyrics as final.
 
 ---
 
@@ -283,6 +303,21 @@ When generating a full treatment, use this structure:
 - Mood:
 - Estimated energy or BPM:
 - Video length:
+- Lyrics source:
+- Lyrics confirmation status:
+
+## Confirmed Lyric Meaning
+- Literal story:
+- Emotional subtext:
+- Central conflict:
+- Key symbols or repeated phrases:
+- Section-by-section lyric beats:
+
+## Approved Plot Direction
+- User-approved interpretation:
+- Visual metaphor:
+- Character or artist arc:
+- Meaning-to-scene strategy:
 
 ## Director's Concept
 [One strong paragraph describing the emotional story and visual world.]
@@ -419,6 +454,7 @@ Create 8-15 shot prompts. Each prompt should include subject, setting, action, c
 - The bridge creates contrast.
 - Camera movement matches emotion.
 - Cuts and transitions are motivated by music.
+- Scenes are grounded in confirmed lyrics and approved meaning.
 - Motifs evolve across the video.
 - Color and lighting are intentional.
 - Remotion implementation is specific enough to build.
@@ -448,15 +484,16 @@ A lone artist walking through a rain-soaked neon alley at midnight, singing dire
 Before finalizing, verify:
 
 1. Opening image is memorable.
-2. Story has emotional progression.
+2. Lyrics were collected or extracted and confirmed before final scene planning.
 3. Every scene includes movement.
 4. Transitions are motivated.
 5. Chorus is visually larger than verse.
 6. Bridge changes the visual language.
 7. Final chorus is the strongest section.
 8. Final image is memorable.
-9. Color palette is intentional.
-10. Remotion plan is buildable.
-11. If implementation is requested, `$remotion-best-practices` has been used for code, timing, media, and render guidance.
+9. Story has emotional progression based on the approved lyric meaning.
+10. Color palette is intentional.
+11. Remotion plan is buildable.
+12. If implementation is requested, `$remotion-best-practices` has been used for code, timing, media, and render guidance.
 
 If the plan feels generic, revise with more specific imagery, stronger motifs, sharper camera moves, and clearer emotional stakes.

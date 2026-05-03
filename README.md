@@ -1,6 +1,8 @@
 # Remotion Music Video Director Skill
 
-Publish-ready Agent Skill for creating cinematic, beat-synced Remotion music video treatments, storyboards, prompt packs, and implementation plans.
+Publish-ready Agent Skill for creating lyrics-first, beat-synced Remotion music video treatments, storyboards, prompt packs, and implementation plans.
+
+The skill first extracts or collects lyrics, asks the user to confirm them, derives meaning and plot from the approved lyrics, then asks for plot approval before creating final scenes.
 
 For code or build requests, the skill instructs agents to coordinate with `$remotion-best-practices` so the creative plan turns into valid Remotion React code, timing, media handling, and render guidance.
 
