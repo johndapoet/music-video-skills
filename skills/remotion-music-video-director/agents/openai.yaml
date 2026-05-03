@@ -1,4 +1,4 @@
 interface:
   display_name: "Remotion Music Video Director"
   short_description: "Music video direction for Remotion"
-  default_prompt: "Use $remotion-music-video-director to turn this song brief into a cinematic Remotion-ready music video plan."
+  default_prompt: "Use $remotion-music-video-director to turn this song brief into a cinematic Remotion-ready music video plan, and use $remotion-best-practices for any implementation details."

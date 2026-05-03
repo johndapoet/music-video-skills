@@ -1,6 +1,6 @@
 ---
 name: remotion-music-video-director
-description: Create cinematic, dramatic, beat-synced music video concepts and Remotion implementation plans. Use when the user wants a music video treatment, scene plan, storyboard, prompt pack, animation direction, editing rhythm, camera movement, transitions, lighting, color style, or Remotion-ready generation guidance from a song brief, lyrics, genre, mood, BPM, or style references.
+description: Create cinematic, dramatic, beat-synced music video concepts and Remotion implementation plans. Use when the user wants a music video treatment, scene plan, storyboard, prompt pack, animation direction, editing rhythm, camera movement, transitions, lighting, color style, or Remotion-ready generation guidance from a song brief, lyrics, genre, mood, BPM, or style references. For Remotion code or build requests, coordinate with $remotion-best-practices.
 ---
 
 # Remotion Music Video Director
@@ -232,7 +232,26 @@ Tie performance to lyrics and energy.
 
 ## Remotion Implementation Rules
 
-Think in frames, layers, and reusable components.
+Think in frames, layers, reusable components, and the rules from `$remotion-best-practices`.
+
+When the user asks to create, scaffold, code, render, debug, or modify the actual Remotion music video, explicitly use `$remotion-best-practices` before writing implementation steps or code. Treat this skill as the director and `$remotion-best-practices` as the technical production supervisor.
+
+If `$remotion-best-practices` is available, load its main guidance first, then load relevant rule files as needed:
+
+- `rules/audio-visualization.md` for waveforms, spectrum bars, bass-reactive effects, or beat-reactive visuals
+- `rules/audio.md`, `rules/trimming.md`, or `rules/get-audio-duration.md` for music files, timing, volume, and duration
+- `rules/sequencing.md`, `rules/timing.md`, and `rules/transitions.md` for cuts, scene timing, easing, and transitions
+- `rules/images.md`, `rules/videos.md`, `rules/light-leaks.md`, `rules/lottie.md`, or `rules/3d.md` for visual assets and effects
+- `rules/text-animations.md`, `rules/measuring-text.md`, `rules/google-fonts.md`, or `rules/local-fonts.md` for lyric typography
+- `rules/parameters.md`, `rules/calculate-metadata.md`, and `rules/compositions.md` for reusable, configurable video systems
+
+If `$remotion-best-practices` is unavailable, still follow these minimum Remotion constraints:
+
+- Animate with `useCurrentFrame()`, `interpolate()`, `spring()`, and `Easing`, not CSS transitions or CSS animations
+- Put local assets in `public/` and reference them with `staticFile()`
+- Use `<Sequence>` with `from` and `durationInFrames` for scene timing
+- Use `<Img>`, `<Audio>`, and `<Video>` components for media
+- Define fps, width, height, and duration in `src/Root.tsx` or `calculateMetadata`
 
 For each scene, include practical Remotion notes:
 
@@ -386,6 +405,8 @@ When generating a full treatment, use this structure:
 - Beat-sync strategy:
 - Typography strategy:
 - Transition components:
+- `$remotion-best-practices` rules to load:
+- Remotion guardrails:
 - Color grading layer:
 - Export notes:
 
@@ -401,6 +422,7 @@ Create 8-15 shot prompts. Each prompt should include subject, setting, action, c
 - Motifs evolve across the video.
 - Color and lighting are intentional.
 - Remotion implementation is specific enough to build.
+- Remotion code guidance explicitly uses `$remotion-best-practices` when implementation is requested.
 ```
 
 ---
@@ -435,5 +457,6 @@ Before finalizing, verify:
 8. Final image is memorable.
 9. Color palette is intentional.
 10. Remotion plan is buildable.
+11. If implementation is requested, `$remotion-best-practices` has been used for code, timing, media, and render guidance.
 
 If the plan feels generic, revise with more specific imagery, stronger motifs, sharper camera moves, and clearer emotional stakes.

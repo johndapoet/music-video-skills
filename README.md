@@ -2,6 +2,8 @@
 
 Publish-ready Agent Skill for creating cinematic, beat-synced Remotion music video treatments, storyboards, prompt packs, and implementation plans.
 
+For code or build requests, the skill instructs agents to coordinate with `$remotion-best-practices` so the creative plan turns into valid Remotion React code, timing, media handling, and render guidance.
+
 ## Install From GitHub
 
 Replace `OWNER/REPO` with your GitHub repo:
